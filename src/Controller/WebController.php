@@ -16,8 +16,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class WebController extends Controller
 {
     /**
+     * @Route("/", name="web_index")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function index() 
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/chat", name="web_chat")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function chat() 
+    {
+        return [];
+    }
+
+    /**
      * @Route("/hear", name="web_hear")
-     * @Method({"POST"})
      * @Template()
      */
     public function hear(Request $request)
@@ -30,6 +49,10 @@ class WebController extends Controller
             $bot->reply('hello yourself.');
         });
 
+        $botman->fallback(function($bot) {
+            $bot->reply('Sorry, I did not understand what you are saying');
+        });
+        
         $botman->listen();
 
         return new Response();
